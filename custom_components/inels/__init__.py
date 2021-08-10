@@ -6,6 +6,7 @@ https://github.com/JH-Soft-Technology/InelsForHass
 """
 import asyncio
 import logging
+import time
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
@@ -52,6 +53,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     )
 
     await coordinator.async_refresh()
+
+    print("Printed immediately.")
+    time.sleep(30)
+    print("Printed after 30 seconds.")
 
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
