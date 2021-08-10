@@ -75,13 +75,16 @@ class InelsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def _test_credentials(self, host, port, version):
         """Return true if credentials is valid."""
         try:
-            with async_timeout.timeout(5):
+            with async_timeout.timeout(10):
                 _LOGGER.info("Testing connection")
                 api = Api(host, str(port), version)
 
                 if not api.ping():
+                    _LOGGER.error("api not_available")
                     raise Exception("not_available")
 
+                
+                _LOGGER.info("api available")        
             return True
         except Exception:  # pylint: disable=broad-except
             pass
